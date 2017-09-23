@@ -24,4 +24,8 @@ object SampleApp extends App {
   val sample = Array("a", "b", "ba", "bca", "bda", "bdca")
 
   println(findChains(sample: _*))
+  
+  println(findChains("tony"))
+  
+  println(findChains("tony", "not"))
 }
