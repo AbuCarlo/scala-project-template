@@ -1,14 +1,20 @@
 package com.aanassar.interviews
 
+import org.log4s.getLogger
+
 import scala.annotation.migration
 
 object SampleApp extends App {
+  
+  private[this] val logger = getLogger
 
   import scalaz.Memo;
 
   def findChains(words: String*) = {
-
+    
     val sortedWords = words.map(w => w.sorted).toSet
+    
+    logger.trace(s"Words reduced to ${sortedWords}")
 
     lazy val f: String => Int = Memo.mutableHashMapMemo { w =>
       if (!sortedWords.contains(w))
@@ -23,9 +29,11 @@ object SampleApp extends App {
 
   val sample = Array("a", "b", "ba", "bca", "bda", "bdca")
 
-  println(findChains(sample: _*))
+  assert(findChains(sample: _*) == 4)
+    
+  assert(findChains("tony", "not") == 2)
+    
+  assert(findChains("a") == 1)
   
-  println(findChains("tony"))
-  
-  println(findChains("tony", "not"))
+  assert(findChains("z", "zz", "zzz", "x", "xx") == 3)
 }
